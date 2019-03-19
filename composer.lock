@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60007664938710edf52eadddd7551867",
+    "content-hash": "82e073e33f68404762bb3412d49a1425",
     "packages": [
         {
             "name": "braintree/braintree_php",
-            "version": "3.35.0",
+            "version": "3.39.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "6c4388199ce379432804a5c18b88585157ef2ed7"
+                "reference": "19c6f50fa9fee1388ea5e7f556457243dc35a145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/6c4388199ce379432804a5c18b88585157ef2ed7",
-                "reference": "6c4388199ce379432804a5c18b88585157ef2ed7",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/19c6f50fa9fee1388ea5e7f556457243dc35a145",
+                "reference": "19c6f50fa9fee1388ea5e7f556457243dc35a145",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 }
             ],
             "description": "Braintree PHP Client Library",
-            "time": "2018-07-26T14:37:38+00:00"
+            "time": "2019-01-24T20:25:28+00:00"
         },
         {
             "name": "colinmollenhour/cache-backend-file",
@@ -2170,7 +2170,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",

@@ -55,7 +55,7 @@
         "webonyx/graphql-php": "^0.12.6",
         "zendframework/zend-captcha": "^2.7.1",
         "zendframework/zend-code": "~3.3.0",
-        "zendframework/zend-config": "^2.6.0",
+        "zendframework/zend-config": "^3.2.0",
         "zendframework/zend-console": "^2.6.0",
         "zendframework/zend-crypt": "^2.6.0",
         "zendframework/zend-db": "^2.8.2",

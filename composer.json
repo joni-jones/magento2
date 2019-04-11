@@ -89,7 +89,7 @@
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "~6.5.0",
         "sebastian/phpcpd": "~3.0.0",
-        "squizlabs/php_codesniffer": "3.3.1",
+        "squizlabs/php_codesniffer": "3.4.2",
         "allure-framework/allure-phpunit": "~1.2.0"
     },
     "suggest": {

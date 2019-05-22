@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60007664938710edf52eadddd7551867",
+    "content-hash": "c09019297e56ec39a161dbaa03f2dc22",
     "packages": [
         {
             "name": "braintree/braintree_php",
-            "version": "3.35.0",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "6c4388199ce379432804a5c18b88585157ef2ed7"
+                "reference": "486d1326854410bf045bb0e2d28e401936de7712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/6c4388199ce379432804a5c18b88585157ef2ed7",
-                "reference": "6c4388199ce379432804a5c18b88585157ef2ed7",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/486d1326854410bf045bb0e2d28e401936de7712",
+                "reference": "486d1326854410bf045bb0e2d28e401936de7712",
                 "shasum": ""
             },
             "require": {
@@ -26,10 +26,10 @@
                 "ext-hash": "*",
                 "ext-openssl": "*",
                 "ext-xmlwriter": "*",
-                "php": ">=5.4.0"
+                "php": ">=7.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -51,7 +51,7 @@
                 }
             ],
             "description": "Braintree PHP Client Library",
-            "time": "2018-07-26T14:37:38+00:00"
+            "time": "2019-05-21T15:52:11+00:00"
         },
         {
             "name": "colinmollenhour/cache-backend-file",
@@ -6696,12 +6696,12 @@
             "version": "v1.6.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mikey179/vfsStream.git",
+                "url": "https://github.com/bovigo/vfsStream.git",
                 "reference": "d5fec95f541d4d71c4823bb5e30cf9b9e5b96145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
+                "url": "https://api.github.com/repos/bovigo/vfsStream/zipball/d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
                 "reference": "d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
                 "shasum": ""
             },

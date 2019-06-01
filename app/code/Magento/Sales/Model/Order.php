@@ -20,6 +20,7 @@ use Magento\Sales\Api\Data\OrderItemInterface;
 use Magento\Sales\Api\Data\OrderStatusHistoryInterface;
 use Magento\Sales\Api\OrderItemRepositoryInterface;
 use Magento\Sales\Model\Order\Payment;
+use Magento\Sales\Model\Order\PaymentPlacePublisher;
 use Magento\Sales\Model\Order\ProductOption;
 use Magento\Sales\Model\ResourceModel\Order\Address\Collection;
 use Magento\Sales\Model\ResourceModel\Order\Creditmemo\Collection as CreditmemoCollection;
@@ -310,6 +311,7 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
 
     /*
      * @var PublisherInterface
+     * @var PaymentPlacePublisher
      */
     private $publisher;
 
@@ -411,7 +413,7 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
             ->get(SearchCriteriaBuilder::class);
         $this->scopeConfig = $scopeConfig ?: ObjectManager::getInstance()->get(ScopeConfigInterface::class);
         $this->publisher = $publisher ?: ObjectManager::getInstance()
-            ->get(PublisherInterface::class);
+            ->get(PaymentPlacePublisher::class);
 
         parent::__construct(
             $context,
@@ -1194,7 +1196,7 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
     public function place()
     {
         $this->_eventManager->dispatch('sales_order_place_before', ['order' => $this]);
-        $this->publisher->publish('sales_order.place', $this);
+        $this->publisher->publish($this);
         $this->_eventManager->dispatch('sales_order_place_after', ['order' => $this]);
         return $this;
     }

@@ -13,6 +13,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Locale\ResolverInterface;
+use Magento\Framework\MessageQueue\PublisherInterface;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
@@ -307,6 +308,11 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
      */
     private $scopeConfig;
 
+    /*
+     * @var PublisherInterface
+     */
+    private $publisher;
+
     /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -374,7 +380,8 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
         ProductOption $productOption = null,
         OrderItemRepositoryInterface $itemRepository = null,
         SearchCriteriaBuilder $searchCriteriaBuilder = null,
-        ScopeConfigInterface $scopeConfig = null
+        ScopeConfigInterface $scopeConfig = null,
+        PublisherInterface $publisher = null
     ) {
         $this->_storeManager = $storeManager;
         $this->_orderConfig = $orderConfig;
@@ -403,6 +410,8 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
         $this->searchCriteriaBuilder = $searchCriteriaBuilder ?: ObjectManager::getInstance()
             ->get(SearchCriteriaBuilder::class);
         $this->scopeConfig = $scopeConfig ?: ObjectManager::getInstance()->get(ScopeConfigInterface::class);
+        $this->publisher = $publisher ?: ObjectManager::getInstance()
+            ->get(PublisherInterface::class);
 
         parent::__construct(
             $context,
@@ -1185,7 +1194,7 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
     public function place()
     {
         $this->_eventManager->dispatch('sales_order_place_before', ['order' => $this]);
-        $this->_placePayment();
+        $this->publisher->publish('sales_order.place', $this);
         $this->_eventManager->dispatch('sales_order_place_after', ['order' => $this]);
         return $this;
     }

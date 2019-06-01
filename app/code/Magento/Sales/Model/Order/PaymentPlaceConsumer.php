@@ -58,6 +58,8 @@ class PaymentPlaceConsumer
 
     public function process(OperationInterface $operation): void
     {
+        $this->logger->info('\Magento\Sales\Model\Order\PaymentPlaceConsumer::process');
+
         $status = OperationInterface::STATUS_TYPE_COMPLETE;
         $data = $this->serializer->unserialize($operation->getSerializedData());
         $orderId = (int)$data['order_id'];

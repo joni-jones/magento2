@@ -401,6 +401,8 @@ class Payment extends Info implements OrderPaymentInterface
 
         $this->_eventManager->dispatch('sales_order_payment_place_end', ['payment' => $this]);
 
+        $this->orderRepository->save($order);
+
         return $this;
     }
 

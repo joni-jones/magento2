@@ -206,18 +206,18 @@ class OrderService implements OrderManagementInterface
     public function place(\Magento\Sales\Api\Data\OrderInterface $order)
     {
         try {
-            $order->place();
-        } catch (CommandException $e) {
-            $this->paymentFailures->handle((int)$order->getQuoteId(), __($e->getMessage()));
-            throw $e;
-        }
-
-        try {
             $order = $this->orderRepository->save($order);
         } catch (\Exception $e) {
             $this->logger->critical(
                 'Saving order ' . $order->getIncrementId() . ' failed: ' . $e->getMessage()
             );
+            throw $e;
+        }
+
+        try {
+            $order->place();
+        } catch (CommandException $e) {
+            $this->paymentFailures->handle((int)$order->getQuoteId(), __($e->getMessage()));
             throw $e;
         }
 

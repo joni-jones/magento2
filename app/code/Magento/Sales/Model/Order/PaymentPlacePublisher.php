@@ -9,48 +9,56 @@ namespace Magento\Sales\Model\Order;
 
 use Magento\AsynchronousOperations\Api\Data\OperationInterface;
 use Magento\AsynchronousOperations\Api\Data\OperationInterfaceFactory;
-use Magento\Framework\MessageQueue\PublisherInterface;
-use Magento\Sales\Api\Data\OrderInterface;
+use Magento\Framework\Bulk\BulkManagementInterface;
 use Magento\Framework\DataObject\IdentityGeneratorInterface;
 use Magento\Framework\Serialize\SerializerInterface;
+use Magento\Sales\Api\Data\OrderInterface;
 
 class PaymentPlacePublisher
 {
     /**
-     * @var PublisherInterface
-     */
-    private $publisher;
-    /**
      * @var OperationInterfaceFactory
      */
     private $operationFactory;
+
     /**
      * @var IdentityGeneratorInterface
      */
     private $identityGenerator;
+
     /**
      * @var SerializerInterface
      */
     private $serializer;
 
+    /**
+     * @var BulkManagementInterface
+     */
+    private $bulkManagement;
+
     public function __construct(
-        PublisherInterface $publisher,
         IdentityGeneratorInterface $identityGenerator,
         SerializerInterface $serializer,
-        OperationInterfaceFactory $operationFactory
-    )
-    {
-        $this->publisher = $publisher;
+        OperationInterfaceFactory $operationFactory,
+        BulkManagementInterface $bulkManagement
+    ) {
         $this->operationFactory = $operationFactory;
         $this->identityGenerator = $identityGenerator;
         $this->serializer = $serializer;
+        $this->bulkManagement = $bulkManagement;
     }
 
     public function publish(OrderInterface $order): void
     {
         $topic = 'sales_order.place';
         $uid = $this->identityGenerator->generateId();
-        $data = $this->serializer->serialize(['order_id' => (int)$order->getEntityId()]);
+        $dateTime = new \DateTime();
+        $data = $this->serializer->serialize(
+            [
+                'order_id' => (int)$order->getEntityId(),
+                'timestamp' => $dateTime->format('Y-m-d H:i:s')
+            ]
+        );
         $operation = $this->operationFactory->create([
             'data' => [
                 'bulk_uuid' => $uid,
@@ -59,6 +67,6 @@ class PaymentPlacePublisher
                 'status' => OperationInterface::STATUS_TYPE_OPEN,
             ]
         ]);
-        $this->publisher->publish($topic, $operation);
+        $this->bulkManagement->scheduleBulk($uid, [$operation], 'Place order');
     }
 }

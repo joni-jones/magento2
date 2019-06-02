@@ -5,8 +5,10 @@
  */
 namespace Magento\Sales\Model\Service;
 
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderManagementInterface;
 use Magento\Payment\Gateway\Command\CommandException;
+use Magento\Sales\Model\Order;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -205,6 +207,9 @@ class OrderService implements OrderManagementInterface
      */
     public function place(\Magento\Sales\Api\Data\OrderInterface $order)
     {
+        $state = Order::STATE_NEW;
+        $order->setState($state);
+        $order->setStatus($order->getConfig()->getStateDefaultStatus($state));
         try {
             $order = $this->orderRepository->save($order);
         } catch (\Exception $e) {

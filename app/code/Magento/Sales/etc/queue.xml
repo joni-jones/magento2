@@ -7,6 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/queue.xsd">
     <broker topic="sales_order.place" exchange="magento-db" type="db">
-        <queue name="place_order" consumer="makePayment" consumerInstance="Magento\Framework\MessageQueue\Consumer" handler="Magento\Sales\Model\Order\PaymentPlaceConsumer::process"/>
+        <queue name="sales_order.place" consumer="sales_order.place" consumerInstance="Magento\Framework\MessageQueue\Consumer" handler="Magento\Sales\Model\Order\PaymentPlaceConsumer::process"/>
     </broker>
 </config>

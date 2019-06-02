@@ -18,11 +18,6 @@ use Psr\Log\LoggerInterface;
 class PaymentPlaceConsumer
 {
     /**
-     * @var Payment
-     */
-    private $payment;
-
-    /**
      * @var SerializerInterface
      */
     private $serializer;
@@ -46,10 +41,8 @@ class PaymentPlaceConsumer
         SerializerInterface $serializer,
         OrderRepositoryInterface $orderRepository,
         LoggerInterface $logger,
-        EntityManager $entityManager,
-        Payment $payment
+        EntityManager $entityManager
     ) {
-        $this->payment = $payment;
         $this->serializer = $serializer;
         $this->orderRepository = $orderRepository;
         $this->logger = $logger;
@@ -58,16 +51,14 @@ class PaymentPlaceConsumer
 
     public function process(OperationInterface $operation): void
     {
-        $this->logger->info('\Magento\Sales\Model\Order\PaymentPlaceConsumer::process');
-
         $status = OperationInterface::STATUS_TYPE_COMPLETE;
         $data = $this->serializer->unserialize($operation->getSerializedData());
         $orderId = (int)$data['order_id'];
 
         try {
             $order = $this->orderRepository->get($orderId);
-            $this->payment->setOrder($order);
-            $this->payment->place();
+            $order->getPayment()
+                ->place();
         } catch (InputException | NoSuchEntityException $e) {
             list($errorCode, $message, $status) = [$e->getCode(), $e->getMessage(), OperationInterface::STATUS_TYPE_RETRIABLY_FAILED];
             $this->logger->error('Order entity cannot be found id: ' . $orderId , [$e]);
